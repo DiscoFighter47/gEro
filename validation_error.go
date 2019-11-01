@@ -14,3 +14,12 @@ func (err ValidationError) Error() string {
 func (err ValidationError) Add(key, msg string) {
 	err[key] = append(err[key], msg)
 }
+
+// Extend errors from another validation error
+func (err ValidationError) Extend(errV ValidationError) {
+	for k, v := range errV {
+		for _, msg := range v {
+			err.Add(k, msg)
+		}
+	}
+}
