@@ -3,7 +3,7 @@ package gero
 import "encoding/json"
 
 // ValidationError holds multiple errors for multiple keys
-type ValidationError map[string]string
+type ValidationError map[string][]string
 
 func (err ValidationError) Error() string {
 	buf, _ := json.Marshal(err)
@@ -12,5 +12,5 @@ func (err ValidationError) Error() string {
 
 // Add a new error for the given key
 func (err ValidationError) Add(key, msg string) {
-	err[key] = msg
+	err[key] = append(err[key], msg)
 }
